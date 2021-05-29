@@ -1,3 +1,17 @@
+@import "./index2";
+//因gulpfile.js的scss裡有includePaths:['./node_modules/bootstrap/scss']，
+//因此尋找檔案時可直接使用@import "bootstrap"，找到bootstrap.scss。
+//若無設置必須使用@import "node_modules/bootstrap/scss/bootstrap.scss";
+
+//_variables有底線不會被編譯
+
+// sass 的機制
+// Bootstrap 中的變數是有加上 !default，這個是容易被覆蓋的
+// 如果 "都" 有加上 !default 的情況下，在前面的會被讀取，在前面的會被讀取
+
+@import "functions";
+@import "helpers/variables";
+@import "bootstrap";
 $color: "red";
 
 .bb {

@@ -60,7 +60,9 @@ gulp.task("sass", function() {
         .src("./source/css/**/*.scss")
         .pipe($.plumber())
         .pipe($.if(options.env == "dev", $.sourcemaps.init())) // 初始化 sourcemaps
-        .pipe($.sass().on("error", $.sass.logError))
+        .pipe($.sass({
+           includePaths:['./node_modules/bootstrap/scss'] //node-sass option ，@import路徑
+        }).on("error", $.sass.logError))
         //css 編譯完成 新增前綴字
         .pipe($.postcss([autoprefixer()]))
         .pipe($.if(options.env == "production", cleanCSS()))
@@ -116,7 +118,7 @@ gulp.task("bower", function() {
 gulp.task("vendor", ["bower"], function() {
     //[bower]優先執行，沒寫會同時執行而出錯
     return gulp
-        .src("./.tmp/vendors/**/*.js")
+        .src(["./.tmp/vendors/**/*.js","./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"])
         .pipe($.order(["jquery.js", "bootstrap.js"])) //合併前先排列順序
         .pipe($.concat("vendor.js")) //合併成一隻檔案
         .pipe(
